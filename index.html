@@ -7,21 +7,37 @@
     <link rel="stylesheet" href="./style.css">
     <title>calculator-of-life-on-investment</title>
     <style>
+        p {
+            margin: 5px 25px;
+        }
         input {
             display: block;
-            margin-top: 10px;
+            margin: 5px 25px;
+        }
+        div {
+            height: 50px;
+            width: 100px;
+            background-color: cadetblue;
+            text-align: center;
+            line-height: 50px;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
-
+    <p>лет начал откладывать</p>
     <input value="1" type="number" placeholder="лет начал откладывать" id="startOfInvestment">
+    <p>лет вышел на пенсию</p>
     <input value="3" type="number" placeholder="лет вышел на пенсию" id="beginningRetirement">
+    <p>лет умер</p>
     <input value="5" type="number" placeholder="лет умер" id="dateDeath">
+    <p>$ надо в год</p>
     <input value="10" type="number" placeholder="$ надо в год" id="amountMoneyPerYear">
     
+    <div>расчитать</div>
+    
     <p class="message" id="message"></p>
-
+    
     <canvas height='400' width='800' id='example'></canvas>
 
     <script src="./main.js"></script>

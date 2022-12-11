@@ -4,58 +4,71 @@ const dateDeath = document.getElementById("dateDeath");
 const amountMoneyPerYear = document.getElementById("amountMoneyPerYear");
 const message = document.getElementById("message");
 
-const equation = {
-    coefficientY: null, // 100
-    coefficientX: 1.04,  // x в год // поменять, чтобы -1 не делать с 0 начинать ?
-    retiredYears: null,
-    saveYears: null,
-    requiredAmountMoneyInYear: null,
-    coefficientXForAccumulation: 1.04, // поменять, чтобы -1 не делать с 0 начинать ?
-    amountDeferralYear: null,
-    retirementSize: null
+let coefficientY = null; // можно почистить немного
+let coefficientX = 1.04;
+let coefficientXForAccumulation = 1.04;
+let retiredYears = null;
+let saveYears = null;
+let requiredAmountMoneyInYear = null;
+let amountDeferralYear = null;
+let retirementSize = null;
+
+provideСalculations = () => {
+    for (let i = 0; i < retiredYears - 1; i++) { // отображение графика
+        calculateCoefficientsInStep();
+    }
+
+    requiredAmountMoneyInYear = Math.ceil(coefficientY / coefficientX); // на всю жизнь
+
+    for (let i = 0; i < saveYears - 1; i++) {
+       stepCalculationOfYearsContribution();
+    }
+
+    amountDeferralYear = Math.ceil(requiredAmountMoneyInYear / coefficientXForAccumulation);
+
+    showMessage();
+    resetValues();
 }
-    // calculationOfYearsContribution = () => { // непонятки с годами
-    //     for (let i = 0; i < equation.saveYears - 1; i++) {
-    //        stepCalculationOfYearsContribution();
-    //     }
-    //   equation.amountDeferralYear = Math.ceil(equation.requiredAmountMoneyInYear / equation.coefficientXForAccumulation);
-    // }
 
-    // stepCalculationOfYearsContribution = () => { // сколько нужно в месяц
-    //     equation.coefficientXForAccumulation += equation.coefficientXForAccumulation + ( equation.coefficientXForAccumulation * 0.04 );
-    // }
-    
-    setValuesFrom = () => {
-        equation.retiredYears = Number(dateDeath.value - beginningRetirement.value);
-        equation.coefficientY = Number(amountMoneyPerYear.value);
-        equation.retirementSize = Number(equation.coefficientY) ;
-        equation.saveYears = Number(beginningRetirement.value - startOfInvestment.value);
-    }
-// coefficientX   coefficientX   retirementSize
-    calculateCoefficientsInStep = () => {
-        equation.coefficientX = equation.coefficientX + ( equation.coefficientX * 0.04 );
-        equation.coefficientY = equation.coefficientY + ( equation.coefficientY * 0.04 ) + equation.retirementSize;
-    }
+calculateCoefficientsInStep = () => { // сколько нужно в год
+    coefficientX = coefficientX + (coefficientX * 0.04);
+    coefficientY = coefficientY + (coefficientY * 0.04) + retirementSize;
+}
 
-    calculateYearlyContribution = () => { // сколько нужно накопить работатет от 2 лет // разбить на функции
-        message.innerText = "";
+stepCalculationOfYearsContribution = () => { // сколько нужно в год
+    coefficientXForAccumulation += 1 + ( coefficientXForAccumulation * 0.04 );
+}
 
-        for (let i = 0; i < equation.retiredYears - 1; i++) {
-            calculateCoefficientsInStep();
-        }
+const showMessage = () => {
+    message.innerText = "";
+    message.innerText = `${requiredAmountMoneyInYear}$ нужно для жизни на пенсии ${retiredYears} лет
+    откладывая по ${amountDeferralYear}$ в год в течении ${saveYears} лет`; // года лет
+}
 
-        equation.requiredAmountMoneyInYear = equation.coefficientY / equation.coefficientX; // на всю жизнь
-        
-        // calculationOfYearsContribution();
-        // console.log(equation.coefficientX, equation.coefficientY, equation.coefficientY / equation.coefficientX);
-        
-        message.innerText = `${Math.ceil(equation.requiredAmountMoneyInYear)} нужно для жизни на пенсии ${equation.retiredYears} лет`;
-        [equation.retiredYears, equation.coefficientY, equation.requiredAmountMoneyInYear, equation.coefficientX] = [null, null, null, 1.04] 
-    }
+showGraph = () => {
+
+}
+
+const resetValues = () => {
+    [coefficientY, coefficientX, retiredYears, saveYears, requiredAmountMoneyInYear, coefficientXForAccumulation, amountDeferralYear, retirementSize]
+    = [null, 1.04, null, null, null, 1.04, null, null];
+}
+
+setValues = () => {
+    retiredYears = Number(dateDeath.value - beginningRetirement.value);
+    coefficientY = Number(amountMoneyPerYear.value);
+    retirementSize = Number(coefficientY);
+    saveYears = Number(beginningRetirement.value - startOfInvestment.value);
+}
 
 document.addEventListener("keydown", (e) => {
     if (e.code === "Enter") {
-        setValuesFrom();
-        calculateYearlyContribution();
+        setValues();
+        provideСalculations();
     }
+})
+
+document.querySelector("div").addEventListener("click", () => {
+    setValues();
+    provideСalculations();
 })
