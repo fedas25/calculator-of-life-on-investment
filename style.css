@@ -1,14 +1,81 @@
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline}
+article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}
+html{height:100%}
+body{line-height:1}
+ol,ul{list-style:none}
+blockquote,q{quotes:none}
+blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}
+table{border-collapse:collapse;border-spacing:0}
+
 input[type="number"] {
 	-moz-appearance: textfield;
 	-webkit-appearance: textfield;
 	appearance: textfield;
 }
- 
+
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
 	display: none;
 }
 
-canvas {
-	border: 1px solid black;
+@font-face {
+	font-family: 'Roboto';
+	src: url("./fonts/Roboto/Roboto-Regular.ttf");
+}
+
+.input-forms {
+	display: block;
+	max-width: 1130px;
+	min-width: 300px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	min-height: 50px;
+	max-height: 200px;
+	margin: 5% auto 0;
+}
+
+input {
+	height: 40px;
+	border: none;
+	border-bottom: 2px solid rgba(143, 141, 198, 0.34);
+	font-family: 'Roboto';
+	font-size: 23px;
+	color: rgb(117, 115, 158);
+	outline: none;
+}
+
+input::placeholder {
+	font-family: 'Roboto';
+	font-style: normal;
+}
+
+.button {
+	cursor: pointer;
+	height: 70px;
+	width: 180px;
+	font-family: 'Roboto';
+	font-size: 23px;
+	color: aliceblue;
+	background-color: rgba(83, 90, 202, 1);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 4% auto 0;
+	border-radius: 10px;
+}
+
+.message {
+	font-family: 'Roboto';
+    max-height: 500px;
+    max-width: 900px;
+	min-width: 90%;
+    font-size: 30px;
+    Line-height: 45px;
+	margin: 60px auto;
+	text-align: center;
+}
+
+.data {
+	color:rgba(115, 23, 208, 1);
 }

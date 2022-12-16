@@ -3,17 +3,26 @@ const beginningRetirement = document.getElementById("beginningRetirement");
 const dateDeath = document.getElementById("dateDeath");
 const amountMoneyPerYear = document.getElementById("amountMoneyPerYear");
 const message = document.getElementById("message");
+const ctx = document.getElementById("canvas");
 
-let coefficientY = null; // можно почистить немного
-let coefficientX = 1.04;
-let coefficientXForAccumulation = 1.04;
+ // можно убрать
 let retiredYears = null;
 let saveYears = null;
 let requiredAmountMoneyInYear = null;
 let amountDeferralYear = null;
 let retirementSize = null;
 
-provideСalculations = () => {
+let coefficientX = 1.04;
+let coefficientY = null;
+let coefficientXForAccumulation = 1.04;
+
+showGraph = () => { // получить данные в виде массива
+    
+}
+
+// получить данные
+provideСalculations = () => { // тут собрать объект
+
     for (let i = 0; i < retiredYears - 1; i++) { // отображение графика
         calculateCoefficientsInStep();
     }
@@ -39,22 +48,20 @@ stepCalculationOfYearsContribution = () => { // сколько нужно в г�
     coefficientXForAccumulation += 1 + ( coefficientXForAccumulation * 0.04 );
 }
 
-const showMessage = () => {
-    message.innerText = "";
-    message.innerText = `${requiredAmountMoneyInYear}$ нужно для жизни на пенсии ${retiredYears} лет
-    откладывая по ${amountDeferralYear}$ в год в течении ${saveYears} лет`; // года лет
+const showMessage = () => { // кинуть апогей денег и то, сколько нцжно откладывать
+    message.innerHTML = "";
+    message.innerHTML = `Вам нужно откладывать по <span class="data">${amountDeferralYear}$</span>
+    в год в течении <span class="data">${saveYears}</span> лет
+    чтобы накопить <span class="data">${requiredAmountMoneyInYear}$</span>
+    для жизни на пенсии <span class="data">${retiredYears}</span> лет.`; // года / лет
 }
 
-showGraph = () => {
-
-}
-
-const resetValues = () => {
+const resetValues = () => { // постараться убрать
     [coefficientY, coefficientX, retiredYears, saveYears, requiredAmountMoneyInYear, coefficientXForAccumulation, amountDeferralYear, retirementSize]
     = [null, 1.04, null, null, null, 1.04, null, null];
 }
 
-setValues = () => {
+setValues = () => { // постараться убрать
     retiredYears = Number(dateDeath.value - beginningRetirement.value);
     coefficientY = Number(amountMoneyPerYear.value);
     retirementSize = Number(coefficientY);
@@ -68,7 +75,7 @@ document.addEventListener("keydown", (e) => {
     }
 })
 
-document.querySelector("div").addEventListener("click", () => {
+document.querySelector(".button").addEventListener("click", () => {
     setValues();
     provideСalculations();
 })
